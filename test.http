@@ -1,0 +1,15 @@
+@url = http://localhost:3001/api
+@json = Content-Type: application/json
+
+###
+post {{url}}/articles
+{{json}}
+
+{
+  "name":"第4篇文章",
+  "body":"文章内容"
+}
+
+###
+get {{url}}/articles/60460341fcca9c08fc9d36a7
+

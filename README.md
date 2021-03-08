@@ -1,5 +1,5 @@
 # element-admin
-
+基于nodejs、vue、element的后台管理平台，一个前后端的全栈项目。
 ## Project setup
 ```
 npm install
