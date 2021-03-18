@@ -21,7 +21,7 @@
       </el-dropdown>
       <span>王小虎</span>
     </el-header>
-    
+
     <el-main>
        <router-view></router-view>
     </el-main>
@@ -41,14 +41,14 @@
     color: #333;
     line-height: 60px;
   }
-  
+
   .el-aside {
     color: #333;
   }
 </style>
 
 <script>
-  import ListArticle from './views/ListArticle'
+  import ListArticle from 'views/ListArticle'
   export default {
     name:"App",
     components:{

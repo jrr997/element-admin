@@ -1,65 +1,81 @@
 <template>
-    <el-form @submit.native.prevent="putArticle" ref="form" :model="article" label-width="80px">
-  <el-form-item label="文章标题">
-    <el-input v-model="article.name"></el-input>
-  </el-form-item>
-  <el-form-item label="文章内容">
-    <el-input type="textarea" v-model="article.body"></el-input>
-  </el-form-item>
-  <el-form-item>
-    <el-button type="primary" native-type="submit">保存</el-button>
-    <el-button>取消</el-button>
-  </el-form-item>
-</el-form>
+  <el-form
+    @submit.native.prevent="putArticle"
+    ref="form"
+    :model="article"
+    label-width="80px"
+  >
+    <el-form-item label="文章标题">
+      <el-input v-model="article.name"></el-input>
+    </el-form-item>
+    <el-form-item label="文章内容">
+      <editor ref="editor" @save="save" :body="article.body"></editor>
+      <el-input
+        type="textarea"
+        v-model="article.body"
+        style="display: none; width: 0; height: 0"
+      ></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" native-type="submit">提交</el-button>
+      <el-button @click="cancel">取消</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
-import {request} from '../network/request'
+import request from "network/request";
+import Editor from "components/common/Editor";
+import { saveArticle } from "network/editor";
 export default {
-  name:'EditArticle',
+  name: "EditArticle",
+  components: { Editor },
   data() {
     return {
-      article:{
-        name:'',
-        body:''
+      article: {
+        name: "",
+        body: "",
       },
-    }
+    };
   },
 
-  methods:{
-     // 更新数据
-    putArticle() { 
-      request({
-        method:'put',
-        url:`/articles/${this.articleId}`,
-        params:this.article
-      }).then(res => {
-           this.$message({
-          message: '文章更新成功！',
-          type: 'success'
-        });
-      })
-    }
+  methods: {
+    // 提交数据
+    putArticle() {
+      const text = this.$refs.editor.text;
+      this.save(text);
+    },
+
+    // 保存文章
+    save(text, html) {
+      this.article.body = text;
+      saveArticle(this.articleId, this.article).then((res) => {
+        this.$message({ message: "保存成功！", type: "success" });
+      });
+    },
+    // 取消
+    cancel() {
+      this.$router.back();
+    },
   },
 
-  computed:{
+  computed: {
     articleId() {
-      return this.$route.params.id
-    }
+      return this.$route.params.id;
+    },
   },
 
   created() {
     // 根据id拿到指定文章
     request({
-      url:`/articles/${this.articleId}`
-    }).then(res => {
+      url: `/articles/${this.articleId}`,
+    }).then((res) => {
       this.article.name = res.data.name;
       this.article.body = res.data.body;
-    })
-  }
-}
+    });
+  },
+};
 </script>
 
 <style>
-
 </style>

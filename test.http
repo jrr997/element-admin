@@ -13,3 +13,6 @@ post {{url}}/articles
 ###
 get {{url}}/articles/60460341fcca9c08fc9d36a7
 
+###
+// 获取所有文章
+get {{url}}/articles

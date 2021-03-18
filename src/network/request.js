@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export function request(config) {
+export default function request(config) {
   // 新建一个axios实例
   const instance = axios.create({
     baseURL: 'http://127.1.1.0:3001/api',
