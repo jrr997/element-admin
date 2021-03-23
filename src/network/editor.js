@@ -1,4 +1,4 @@
-import { request } from './request'
+import request from './request'
 
 // 在编辑页中保存文章
 export function saveArticle(id, article) {
